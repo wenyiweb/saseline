@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<script>
+		var phoneWidth =  parseInt(window.screen.width);
+		var phoneScale = phoneWidth/640;
+		var ua = navigator.userAgent;
+		if (/Android (\d+\.\d+)/.test(ua)){
+			var version = parseFloat(RegExp.$1);
+			if(version>2.3){
+				document.write('<meta name="viewport" content="width=640, minimum-scale = '+phoneScale+', maximum-scale = '+phoneScale+', target-densitydpi=device-dpi">');
+			}else{
+				document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+			}
+		} else {
+			document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+		}
+		document.addEventListener('touchmove', function(e){
+			e.preventDefault();
+		},false);
+	</script>
+	<title>vaseline</title>
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+	
+	<link rel="stylesheet" href="css/style.css">
+	
+</head>
+<body>
+	<!--loading / s-->
+	<div class="loading ab">
+		<div class="bg ab">
+			<img src="images/loading.png" alt="">
+		</div>
+		<div class="star ab"></div>
+		<div class="title ab">
+			<img src="images/title.png" alt="">
+		</div>
+		<div class="logo ab">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="loadingpercent ab"></div>
+	</div>
+	<!--首屏 / e-->
+	<div class="cover ab none">
+		<div class="title ab">
+			<img src="images/title.png" alt="">
+		</div>
+		<div class="yun-content ab">
+			<div class="yun yun1 ab"></div>
+			<div class="yun yun2 ab"></div>
+			<div class="yun yun3 ab"></div>
+			<div class="yun yun4 ab"></div>
+			<div class="yun yun5 ab"></div>
+			<div class="yun yun6 ab"></div>
+			<div class="yun yun7 ab"></div>
+		</div>
+		<div class="cup ab"></div>
+		<div class="brands ab on">
+			<div class="light-content ab">
+				<div class="light light1 ab"></div>
+				<div class="light light2 ab"></div>
+				<div class="light light3 ab"></div>
+			</div>
+			<div class="line ab"></div>
+			<div class="brand ab brand1"></div>
+			<div class="brand ab brand2"></div>
+			<div class="brand ab brand3"></div>
+			<div class="brand ab brand4"></div>
+			<div class="brand ab brand5"></div>
+		</div>
+		<div class="logo ab">
+			<img src="images/logo2.png" alt="">
+		</div>
+	</div>
+	<!--首屏 / s-->
+	<!--第二页 / s-->
+	<!--第二页 / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<!--loading / s-->
+	<script type="text/javascript" src="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/js/jquery-2.1.1.min.js"></script>
+	<script src="js/preloader.min.js"></script>
+	<script type="text/javascript" src="js/app.js"></script>
+</body>
+</html>
