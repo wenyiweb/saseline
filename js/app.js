@@ -36,7 +36,28 @@ function fade(id,type,cb){
 function coverFn(){
 	//云层处理
 }
+function fontSize()
+{
+    var view_width = document.getElementsByTagName('html')[0].getBoundingClientRect().width;
+
+    var _html = document.getElementsByTagName('html')[0];
+
+    if (view_width > 640)
+    {
+        _html.style.fontSize = 640 / 16 + 'px';
+    }
+    else
+    {
+        _html.style.fontSize = view_width / 16 + 'px';
+    }
+}//http://wximg.qq.com/wxp/moment/VJ7cVAsbe/html/index.html
 $(function(){
+	fontSize();
+	 window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function () {
+        setTimeout(function () {
+            fontSize();
+        }, 100);
+    }, false);
 	var wh =  $(window).height();
 	if(wh<=960){	
 		//$('.ma').addClass('masca');
