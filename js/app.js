@@ -1,4 +1,5 @@
-var IMG_PATH = 'http://192.168.55.114/my/vaseline/'
+//var IMG_PATH = 'http://192.168.55.114/my/vaseline/';
+var IMG_PATH = '';
 var filelist = ['images/bg.jpg','images/star.png','images/sprite.png','images/light.png','images/brands.png','images/bigbg.jpg','images/tip.png','images/cloud.png','images/cup2.png','images/vaseline_1.png','imgages/vaseline_3.png','images/pb.jpg','images/vt.png','images/lk.png','images/k.png','images/kl.png','images/button.png','images/pst.png'];
 function loadFn(files, process, complete){
 	var loader = new PxLoader();
