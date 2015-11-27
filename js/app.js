@@ -1,6 +1,6 @@
 //var IMG_PATH = 'http://192.168.55.114/my/vaseline/';
-var IMG_PATH = '';
-var filelist = ['images/bg.jpg','images/star.png','images/sprite.png','images/light.png','images/brands.png','images/bigbg.jpg','images/tip.png','images/cloud.png','images/cup2.png','images/vaseline_1.png','imgages/vaseline_3.png','images/pb.jpg','images/vt.png','images/lk.png','images/k.png','images/kl.png','images/button.png','images/pst.png'];
+var IMG_PATH = '';//资源文件地址
+var filelist = ['images/bg.jpg','images/star.png','images/sprite.png','images/light.png','images/brands.png','images/bigbg.jpg','images/tip.png','images/cloud.png','images/cup2.png','images/vaseline_1.png','images/vaseline_3.png','images/pb.jpg','images/vt.png','images/lk.png','images/k.png','images/kl.png','images/button.png','images/pst.png','images/share.png'];
 function loadFn(files, process, complete){
 	var loader = new PxLoader();
 	for(var i=0;i<files.length;i++){
@@ -35,19 +35,82 @@ function fade(id,type,cb){
 		ele.removeEventListener('webkitTransitionEnd', arguments.callee);
 	} ,false);
 }
+/**
+ * 云层处理
+ * @return {[type]} [description]
+ */
 function coverFn(){
-	//云层处理
+	
+	var count = 0;
+	$('.yun-content').on('touchmove',function(e){
+		e.preventDefault();
+		if(count == 0){
+			$('.yun-content .yun3').addClass('on');
+			$('.yun-content .yun3').one('webkitTransitionEnd',function(){
+				count = 1;
+			})
+		}
+		if(count == 1){
+			$('.yun-content .yun4').addClass('on');
+			$('.yun-content .yun4').one('webkitTransitionEnd',function(){
+				count = 2;
+			})
+		}
+		if(count == 2){
+			$('.yun-content .yun2,.yun-content .yun6').addClass('on');
+			$('.yun-content .yun2').one('webkitTransitionEnd',function(){
+				count = 3;
+			})
+		}
+		if(count == 3){
+			$('.yun-content .yun7').addClass('on');
+			$('.yun-content .yun7').one('webkitTransitionEnd',function(){
+				count = 4;
+			})
+		}
+		if(count == 4){
+			$('.yun-content .yun5,.yun-content .yun1').addClass('on');
+			$('.yun-content .yun5').one('webkitTransitionEnd',function(){
+				count =5;
+				$('.yun-content').hide();
+				brandsFn();
+			})
+		}
+	})
 }
+/**
+ * 品牌处理
+ * @return {[type]} [description]
+ */
+function brandsFn(){
+	$('.brands,.cover .logo').addClass('on');
+	$('.cover .logo').one('webkitTransitionEnd',function(){
+		setTimeout(function(){
+			$('.cover').addClass('out');
+			$('.search-page').show();
+			setTimeout(function(){
+				$('.search-page').addClass('in');
+			},100);
+			searchPageFn();
+		},1000);
+	})
+}
+/**
+ * 寻找最亮的星
+ * @return {[type]} [description]
+ */
 function searchPageFn(){
 	var stage = document.querySelector('.search-page');
 	var bg = document.querySelector('.search-page .bg');
 	var curX = 0,curY = 0,rX = 0,rY = 0;
 	stage.addEventListener('touchstart', function(event){
+		event.preventDefault();
 		$('.tip').hide();
 		var X = $(bg).offset().left,Y = $(bg).offset().top,
             startX = event.touches[0].clientX,startY = event.touches[0].clientY;
             console.log(X+"::"+Y);
         stage.addEventListener('touchmove',function(event){
+        	event.preventDefault();
         	var ev = event.touches[0];
             var curX = ev.clientX - startX;
             var curY = ev.clientY - startY;
@@ -87,18 +150,114 @@ function searchPageFn(){
         },false)
 	},false);
 
-	$('.vaseline').on('touchstart',function(){
+	$('.vaseline').on('tap',function(e){
+		e.preventDefault();
 		$(this).fadeOut();
-		$('.vaseline_logo').hide().css('opacity',1).fadeIn();
+		$('.vaseline_tip').fadeOut();
+		$('.vaseline_logo').hide().css('opacity',1).fadeIn(function(){
+			setTimeout(function(){
+				$('.search-page').fadeOut();
+				$('.scan').fadeIn(function(){
+					scanFn();
+				});
+			},500);
+		});
 	});
-	$('.vaseline_logo').on('touchstart',function(){
+	/*$('.vaseline_logo').on('tap',function(e){
+		e.preventDefault();
 		$('.search-page').fadeOut();
-		$('.scan').fadeIn();
+		$('.scan').fadeIn(function(){
+			scanFn();
+		});
+	})*/
+}
+/**
+ * 扫描
+ * @return {[type]} [description]
+ */
+function scanFn(){
+	$('.explore').on('tap',function(){
+		$('.scan-box').addClass('on');
+		$('.scan-box .kl').on('webkitAnimationEnd',function(){
+			setTimeout(function(){
+				$('.scan').fadeOut();
+				productFn();
+			},350);
+		})
+		
 	})
 }
+function productFn(){
+	$('#swiper').fadeIn();
+	var swiper = new Swiper('#swiper',{
+		direction :"vertical",
+		speed:250,
+		initialSlide:0,
+		slideActiveClass:'on',
+		touchMoveStopPropagation:false,			
+        mousewheelControl: true,
+        keyboardControl: true,
+        onSlideChangeEnd : function(){
+	    }
+	});
+	$('.view').on('tap',function(){
+		$('#product').addClass('swiper-no-swiping');
+		$('.reason').addClass('on');
+	});
+	$('.reason .close').on('tap',function(){
+		$('#product').removeClass('swiper-no-swiping');
+		$('.reason').removeClass('on');
+	})
+	$('.wishbtn').on('click',function(){
+		//$('#wish').addClass('animate');
+		wishFn();
+	})
+}
+//报名
+function addUser(){
+	var url = "http://www.cosmopolitan.com.cn/files/eventapi.php?c=EventApiNew&a=AddEvent&indexsId=617";  
 
-
-		
+	var data = { 
+		"data[2473]": "13031652389",//手机 
+		"data[2474]": "kevin",//真实姓名 
+		"data[2475]": "test wish",//願望
+	};
+	$.ajax({
+		url:url,
+		data:data,
+		type:"GET",
+		success:function(reqData){
+			console.log(reqData)
+		}
+	});
+}
+function wishFn(){
+	$('.wishtitle,.form').hide();
+	var btnh = $(window).height() - $('#wish .bs').offset().top - $('#wish .wishbtn').height();
+	$('#wish .logo').css({
+		'-webkit-transform':'translate3d(0,'+($(window).height() - $('#wish .logo').height())+'px,0)'
+	});
+	$('#wish .wishbtn').css({
+		'-webkit-transform':'translate3d(0,-'+btnh+'px,0)'
+	});
+	$('#wish .logo').one('webkitTransitionEnd',function(){
+		$('#wish .wishbtn').fadeOut('300',function(){
+			$('#wish .bs').addClass('on')
+		});
+	});
+	$('#wish .bs').one('webkitTransitionEnd',function(){
+		$('#wish .bs').fadeOut('300');
+		setTimeout(function(){
+			$('#wish .lx3').addClass('on');
+		},200);				
+	});
+	$('#wish .lx3').one('webkitTransitionEnd',function(){
+		$('#wish .lx3').css('-webkit-transform','translate3d(-540px,600px,0)');
+		$('#wish .lx3').one('webkitTransitionEnd',function(){
+			$('#wish .share').fadeIn();
+		})
+	});
+}	
 function fontSize()
 {
     var view_width = document.getElementsByTagName('html')[0].getBoundingClientRect().width;
@@ -136,44 +295,5 @@ $(function(){
 		//$('.search-page').show();
 		fade('.cover','in');
 		coverFn();
-		var swiper = new Swiper('#swiper',{
-			direction :"vertical",
-			speed:250,
-			initialSlide:0,
-			slideActiveClass:'on',
-			touchMoveStopPropagation:false,			
-	        mousewheelControl: true,
-	        keyboardControl: true,
-	        onSlideChangeEnd : function(){
-		    }
-		});
-		$('.wishbtn').on('click',function(){
-			//$('#wish').addClass('animate');
-			var btnh = $(window).height() - $('#wish .bs').offset().top - $('#wish .wishbtn').height();
-			$('#wish .logo').css({
-				'-webkit-transform':'translate3d(0,'+($(window).height() - $('#wish .logo').height())+'px,0)'
-			});
-			$('#wish .wishbtn').css({
-				'-webkit-transform':'translate3d(0,-'+btnh+'px,0)'
-			});
-			$('#wish .logo').one('webkitTransitionEnd',function(){
-				$('#wish .wishbtn').fadeOut('300',function(){
-					$('#wish .bs').addClass('on')
-				});
-				
-			});
-			$('#wish .bs').one('webkitTransitionEnd',function(){
-				$('#wish .bs').fadeOut('300');
-				setTimeout(function(){
-					$('#wish .lx3').addClass('on');
-				},200);				
-			});
-			$('#wish .lx3').one('webkitTransitionEnd',function(){
-				$('#wish .lx3').css('-webkit-transform','translate3d(-540px,600px,0)');
-				$('#wish .lx3').one('webkitTransitionEnd',function(){
-					$('#wish .share').fadeIn();
-				})
-			});
-		})
 	});
 });
