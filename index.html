@@ -25,6 +25,7 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/css/swiper.min.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script>var startTime = (new Date()).getTime();</script>
 </head>
 <body>
 	<!--loading / s-->
@@ -91,38 +92,41 @@
 		<div class="cup ab"></div>
 	</div>
 	<!--探索 / e-->
-	<!--扫描 / s-->
-	<div class="scan ab">
-		<div class="title ab"></div>
-		<div class="scan-box ab">
-			<p>扫描中...</p>
-			<div class="k"></div>
-			<div class="kl ab"></div>
-		</div>
-		<div class="explore ab"></div>
-	</div>
-	<!--扫描 / e-->
+	
 	<div class="swiper-container" id="swiper">
 		<div class="swiper-wrapper">
-			<!--product / s-->
-			<div class="swiper-slide" id="product">
-				<div class="pst"></div>
-				<div class="title ab">
-					<img src="images/pt.png" alt="">
-				</div>
-				<div class="productPic">
-					<img src="images/pd.png" alt="">
-					<div class="view"></div>
-				</div>
-				<div class="reason">
-					<div class="reason-content">
-						<img src="images/reason.png" alt="">
-						<div class="close"></div>
+			<div class="swiper-slide swiper-no-swiping" id="scan-product">
+				<!--扫描 / s-->
+				<div class="scan ab">
+					<div class="title ab"></div>
+					<div class="scan-box ab">
+						<p>扫描中...</p>
+						<div class="k"></div>
+						<div class="kl ab"></div>
 					</div>
+					<div class="explore ab"></div>
 				</div>
-				<div class="arrow"></div>
+				<!--扫描 / e-->
+				<!--product / s-->
+				<div id="product">
+					<div class="pst"></div>
+					<div class="title ab">
+						<img src="images/pt.png" alt="">
+					</div>
+					<div class="productPic">
+						<img src="images/pd.png" alt="">
+						<div class="view"></div>
+					</div>
+					<div class="reason">
+						<div class="reason-content">
+							<img src="images/reason.png" alt="">
+							<div class="close"></div>
+						</div>
+					</div>
+					<div class="arrow"></div>
+				</div>
+				<!--product / e-->
 			</div>
-			<!--product / e-->
 			<!--wish / s-->
 			<div class="swiper-slide" id="wish">
 				<div class="wishstar"></div>

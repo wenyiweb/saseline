@@ -100,7 +100,7 @@ body{background: url(../images/bg.jpg) no-repeat left top;display: none;max-widt
 	&.in{-webkit-transform:translate3d(0,0,0);}
 }
 .scan{
-	width:100%;height:100%;background:url(../images/pb.jpg) no-repeat;display: none;z-index: 80;
+	width:100%;height:100%;/* background:url(../images/pb.jpg) no-repeat;display: none;z-index: 80; */
 	.title{width: 100%;height: 98px;background: url(../images/vt.png) no-repeat;top: 5%;}
 	.scan-box{width: 100%;height: 656px;top: 18%;background: url(../images/lk.png) no-repeat;
 		p{width: 100%;position: absolute;font-size: 28px;line-height: 40px;text-align: center;height: 40px;top: 50%;margin-top: -40px/$m;opacity: 0;}
@@ -118,11 +118,11 @@ body{background: url(../images/bg.jpg) no-repeat left top;display: none;max-widt
 .swiper-container{width: 100%;height: 100%;position: absolute;display: none;z-index: 70;background: #000;}
 .swiper-slide{width:100%;height:100%;overflow:hidden;position:relative;background:url(../images/pb.jpg) no-repeat;background-size: 100%;}
 #product{
-	overflow: hidden;
+	overflow: hidden;opacity: 0;
 	.pst{width: 100%;height: 100%;position: absolute;z-index: 1;background:url(../images/pst.png) no-repeat;}
 	.title{width: 100%;height: 316px;z-index: 5;position: absolute;}
 	.productPic{width: 100%;height: 829px;z-index: 4;position: absolute;top: 270px;}
-	.view{width: 60px;height: 60px;background: url(../images/add.png) no-repeat;background-size: 100% 100%;position: absolute;top: 100px;left: 320px;}
+	.view{width: 60px;height: 60px;background: url(../images/add.png) no-repeat;background-size: 100% 100%;position: absolute;top: 100px;left: 320px;display: none;}
 	.view{animation:scale  1.5s forwards ease-in-out infinite}
 	&.on{
 		.view{animation:scale  1.5s forwards ease-in-out infinite}
@@ -135,7 +135,7 @@ body{background: url(../images/bg.jpg) no-repeat left top;display: none;max-widt
 		}
 		&.on{transform:translate3d(0,0,0);}
 	}
-	.arrow{width: 128px;height: 128px;background: url(../images/arrow.png) no-repeat;left: 50%;margin-left: -128px/$m;bottom: 0;position: absolute;z-index: 5;transform:translateZ(5px);}
+	.arrow{width: 128px;height: 128px;background: url(../images/arrow.png) no-repeat;left: 50%;margin-left: -128px/$m;bottom: 0;position: absolute;z-index: 5;transform:translateZ(5px);display: none;}
 }
 #wish{
 	.wishstar{width: 100%;height: 100%;position: absolute;background:url(../images/wishstar.png) no-repeat;}

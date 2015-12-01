@@ -161,8 +161,8 @@ function searchPageFn(){
 		$('.vaseline_tip').fadeOut();
 		$('.vaseline_logo').hide().css('opacity',1).fadeIn(function(){
 			setTimeout(function(){
-				$('.search-page').fadeOut();
-				$('.scan').fadeIn(function(){
+				$('.search-page').fadeOut('800');
+				$('#swiper').fadeIn('800',function(){
 					scanFn();
 				});
 			},2000);
@@ -181,6 +181,7 @@ function searchPageFn(){
  * @return {[type]} [description]
  */
 function scanFn(){
+	productFn();
 	$('.explore').on('tap',function(){
 		$('.scan-box').addClass('on');
 		$('.scan-box .kl').on('webkitAnimationEnd',function(){
@@ -193,7 +194,7 @@ function scanFn(){
 	})
 }
 function productFn(){
-	$('#swiper').fadeIn();
+	//$('#swiper').fadeIn();
 	var swiper = new Swiper('#swiper',{
 		direction :"vertical",
 		speed:250,
