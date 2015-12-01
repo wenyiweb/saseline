@@ -44,7 +44,12 @@ function coverFn(){
 	var count = 0;
 	$('.yun-content').on('touchmove',function(e){
 		e.preventDefault();
-		if(count == 0){
+		$('.yun-content .yun').addClass('on');
+		$('.yun-content .yun5').one('webkitTransitionEnd',function(){
+			$('.yun-content').hide();
+			brandsFn();
+		})
+		/*if(count == 0){
 			$('.yun-content .yun3').addClass('on');
 			$('.yun-content .yun3').one('webkitTransitionEnd',function(){
 				count = 1;
@@ -75,7 +80,7 @@ function coverFn(){
 				$('.yun-content').hide();
 				brandsFn();
 			})
-		}
+		}*/
 	})
 }
 /**
@@ -160,7 +165,7 @@ function searchPageFn(){
 				$('.scan').fadeIn(function(){
 					scanFn();
 				});
-			},500);
+			},2000);
 		});
 	});
 	/*$('.vaseline_logo').on('tap',function(e){
