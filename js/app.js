@@ -1,6 +1,6 @@
 //var IMG_PATH = 'http://192.168.55.114/my/vaseline/';
 var IMG_PATH = '';//资源文件地址
-var filelist = ['images/bg.jpg','images/star.png','images/sprite.png','images/light.png','images/brands.png','images/bigbg.jpg','images/tip.png','images/cloud.png','images/cup2.png','images/vaseline_1.png','images/vaseline_3.png','images/pb.jpg','images/vt.png','images/lk.png','images/k.png','images/kl.png','images/button.png','images/pst.png','images/share.png'];
+var filelist = ['images/bg.jpg','images/star.png','images/sprite.png','images/light.png','images/brands.png','images/bigbg.jpg','images/tip.png','images/cloud.png','images/cup2.png','images/vaseline_3.png','images/pb.jpg','images/vt.png','images/lk.png','images/k.png','images/kl.png','images/button.png','images/pst.png','images/share.png'];
 function loadFn(files, process, complete){
 	var loader = new PxLoader();
 	for(var i=0;i<files.length;i++){
@@ -15,6 +15,72 @@ function loadFn(files, process, complete){
 		if(complete) complete();
 	});
 	loader.start();
+}
+var interval = null;
+function snow(){
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+
+	var w = window.innerWidth;
+	var h = window.innerHeight;
+	/*var w = 1920;
+	var h = 3408;*/
+	canvas.width = w;
+	canvas.height = h;
+	
+	var max = 300;
+	var snows = [];
+	var angle = 0;
+
+	for(var i=0;i<max;i++){
+		snows.push({
+			x:Math.random()*w,//x坐标
+			y:Math.random()*h,//y坐标
+			r:Math.random()*1+0.5,//半径
+			d:Math.random()*max,//距离
+		});
+	}
+		
+	function draw(){
+		ctx.clearRect(0,0,w,h);
+		ctx.fillStyle = 'rgba(255,255,255,0.8)';
+		ctx.beginPath();
+
+		for(var i=0;i<max;i++){
+			var s = snows[i];
+			ctx.moveTo(s.x,s.y);
+			ctx.arc(s.x,s.y,s.r,0,Math.PI*2,true);
+		}
+		ctx.fill();
+		update();
+	}
+	
+	function update(){
+		angle += 0.01;
+		for(var i=0;i<max;i++){
+			var s = snows[i];
+
+			s.x += Math.sin(angle) *2;
+			s.y += Math.cos(angle+s.d)+1+s.r/2;
+
+			if(s.x > w + 1.5 || s.x < -1.5 || s.y > h){
+				if(i%3>0){
+					snows[i] = {x:Math.random()*w,y:-10,r:s.r,d:s.d};
+				}else{
+					if(Math.sin(angle) > 0){
+						//left
+						snows[i] = {x:-1.5,y:Math.random()*h,r:s.r,d:s.d};
+					}else{
+						//right
+						snows[i] = {x:w+1.5,y:Math.random()*h,r:s.r,d:s.d}
+
+					}
+				}
+			}
+		}
+	}
+		
+	interval = setInterval(draw,1000/60);
 }
 function fade(id,type,cb){
 	var ele = document.querySelector(id);
@@ -105,6 +171,7 @@ function brandsFn(){
  * @return {[type]} [description]
  */
 function searchPageFn(){
+	snow();
 	var stage = document.querySelector('.search-page');
 	var bg = document.querySelector('.search-page .bg');
 	var curX = 0,curY = 0,rX = 0,rY = 0;
@@ -113,7 +180,7 @@ function searchPageFn(){
 		$('.tip').hide();
 		var X = $(bg).offset().left,Y = $(bg).offset().top,
             startX = event.touches[0].clientX,startY = event.touches[0].clientY;
-            console.log(X+"::"+Y);
+            //console.log(X+"::"+Y);
         stage.addEventListener('touchmove',function(event){
         	event.preventDefault();
         	var ev = event.touches[0];
@@ -151,7 +218,8 @@ function searchPageFn(){
 
             setTimeout(function(){
             	$(bg).css({'left':rX,'top':rY});
-            },20);       
+            	$('.cab').css({'left':rX,'top':rY});
+            },20);
         },false)
 	},false);
 
@@ -160,11 +228,14 @@ function searchPageFn(){
 		$(this).fadeOut();
 		$('.vaseline_tip').fadeOut();
 		$('.vaseline_logo').hide().css('opacity',1).fadeIn(function(){
+			clearInterval(interval);
 			setTimeout(function(){
-				$('.search-page').fadeOut('800');
+				fade('.search-page','out');
+				fade('#swiper','in',scanFn)
+				/*$('.search-page').fadeOut('800');
 				$('#swiper').fadeIn('800',function(){
 					scanFn();
-				});
+				});*/
 			},2000);
 		});
 	});
@@ -299,7 +370,7 @@ function fontSize()
     {
         _html.style.fontSize = view_width / 16 + 'px';
     }
-}//http://wximg.qq.com/wxp/moment/VJ7cVAsbe/html/index.html
+}
 $(function(){
 	//fontSize();
 	/* window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function () {
@@ -308,13 +379,14 @@ $(function(){
         }, 100);
     }, false);*/
 	var wh =  $(window).height();
+	$('body').css('height',wh);
 	if(wh<=960){	
 		//$('.ma').addClass('masca');
 	}
 	
 	
 	$('.loading').height(wh).css({'overflow':'hidden'});
-	$('body').show();
+	//$('body').show();
 	loadFn(filelist, function(n) {
 		$('.loadingpercent').html(n+"%");
 	}, function() {
