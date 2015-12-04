@@ -28,6 +28,10 @@
 	<script>var startTime = (new Date()).getTime();</script>
 </head>
 <body>
+<!-- <div style="position:absolute;top:0;left:0;z-index:9999;width:100%;height:100%;background:#000;font-size:24px;color:fff;">
+	<p id="rr"></p>
+	<img src="images/ps.png" style="position:absolute;top:0;left:0;-webkit-animation:tt 10s infinite forwards linear;" id="ps">
+</div> -->
 	<!--loading / s-->
 	<div class="loading ab">
 		<div class="bg bg1 ab"></div>
@@ -43,7 +47,7 @@
 		<div class="loadingpercent ab"></div>
 	</div>
 	<!--首屏 / e-->
-	<div class="cover ab none">
+	<div class="cover ab">
 		<div class="title ab">
 			<img src="images/title.png" alt="">
 		</div>
@@ -75,28 +79,29 @@
 		</div>
 	</div>
 	<!--首屏 / s-->
+	<div class="or"></div>
+
 	<!--探索 / s-->
 	<div class="search-page ab">
-		<div class="cab"></div>
-		<canvas id="canvas"></canvas>
-		<div class="bg">
-			<!-- <div class="bgs bgs1"></div>
-			<div class="bgs bgs2"></div>
-			<div class="bgs bgs3"></div> -->
-			<div class="vaseline ab">
-				<img src="images/vaseline_s.png" id="vs">
-				<img src="images/sl.png" id="sl">
-				<img src="images/vaseline_s1.png" id="vs1">
+		<div id="wrapper">
+			<div id="scroller">
+				<div class="vaseline ab">
+					<img src="images/vaseline_s.png" id="vs">
+					<img src="images/sl.png" id="sl">
+					<img src="images/vaseline_s1.png" id="vs1">
+				</div>
+				<div class="vaseline_tip ab">
+					<img src="images/star2.png" class="star2 ab">
+					<img src="images/hand.png" class="ab hand">
+				</div>
+				<div class="vaseline_logo ab"></div>
+				<div class="tip ab"></div>
 			</div>
-			<div class="vaseline_tip ab">
-				<img src="images/star2.png" class="star2 ab">
-				<img src="images/hand.png" class="ab hand">
-			</div>
-			<div class="vaseline_logo ab"></div>
-			<div class="tip ab"></div>
-			
 		</div>
-
+		 
+		<div class="starfield" id="starfield1">
+			<div id="stars1"></div>
+		</div>
 		<div class="cloud ab"></div>
 		<div class="cup ab"></div>
 	</div>
@@ -107,24 +112,28 @@
 			<div class="swiper-slide swiper-no-swiping" id="scan-product">
 				<!--扫描 / s-->
 				<div class="scan ab">
+					<div class="main"></div>
 					<div class="title ab"></div>
 					<div class="scan-box ab">
 						<img src="images/lk.png" alt="">
 						<!-- <p>扫描中...</p> -->
 						<div class="k"></div>
 						<div class="kl ab"></div>
+						<div class="ps"></div>
 					</div>
+					
 					<div class="explore ab"></div>
 				</div>
 				<!--扫描 / e-->
 				<!--product / s-->
 				<div id="product" class="ab">
-					<div class="pst"></div>
+					<!-- <div class="pst"></div> -->
 					<div class="title ab">
 						<img src="images/pt.png" alt="">
 					</div>
 					<div class="productPic">
 						<img src="images/pd.png" alt="">
+						<div class="ps"></div>
 						<div class="view"></div>
 					</div>
 					<div class="reason">
@@ -138,7 +147,7 @@
 				<!--product / e-->
 			</div>
 			<!--wish / s-->
-			<div class="swiper-slide" id="wish">
+			<div class="swiper-slide swiper-no-swiping" id="wish">
 				<div class="wishstar"></div>
 				<div class="lx lx1"></div>
 				<div class="lx lx2"></div>
@@ -154,16 +163,25 @@
 					<p>许个愿吧~有机会获得神秘礼盒</p>
 					<div class="formitem">姓名：<input type="text"></div>
 					<div class="formitem">电话：<input type="tel"></div>
-					<div class="formitem">愿望：<textarea></textarea></div>
+					<div class="formitem txt"><span>愿望：</span><textarea></textarea></div>
 				</div>
+				<p class="wishsucc">许愿成功了哦，<br>快把将星愿点亮，<br>将凡士林神秘礼盒带走吧！</p>
 				<div class="wishbtn"></div>
 			</div>
 			<!--wish / e-->
 		</div>
 		
 	</div>
+	<!--背景音乐-->
+	<div class="audio">
+		<audio src="media/music.mp3" preload="auto" loop></audio>
+	</div>
+	<div class="bling">
+		<audio src="media/music2.mp3" preload="auto"></audio>
+	</div>
 	<script type="text/javascript" src="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/js/jquery-2.1.1.min.js"></script>
 	<script src="js/preloader.min.js"></script>
+	<script src="http://lab.cubiq.org/iscroll5/build/iscroll.js"></script>
 	<script src="js/swiper.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script>
