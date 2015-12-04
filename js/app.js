@@ -397,8 +397,6 @@ $('body').css('height',wh);
 
 $('.loading').height(wh).css({'overflow':'hidden'});
 load(function(){
-	//fade('.loading','out');
-	//fade('.cover','in');
 	coverFn();
 	blingFn.testplay();
 	audio = new Audio();
