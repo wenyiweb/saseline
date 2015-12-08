@@ -25,13 +25,13 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/css/swiper.min.css">
 	<link rel="stylesheet" href="css/style.css">
-	<script>var startTime = (new Date()).getTime();</script>
+	<script>
+		//如图片路径是http://192.168.55.114/my/vaseline/images/bg.jpg
+		//var IMG_PATH = 'http://192.168.55.114/my/vaseline/';
+		var IMG_PATH = '';//资源文件地址
+	</script>
 </head>
 <body>
-<!-- <div style="position:absolute;top:0;left:0;z-index:9999;width:100%;height:100%;background:#000;font-size:24px;color:fff;">
-	<p id="rr"></p>
-	<img src="images/ps.png" style="position:absolute;top:0;left:0;-webkit-animation:tt 10s infinite forwards linear;" id="ps">
-</div> -->
 	<!--loading / s-->
 	<div class="loading ab">
 		<div class="bg bg1 ab"></div>
@@ -85,6 +85,7 @@
 	<div class="search-page ab">
 		<div id="wrapper">
 			<div id="scroller">
+				<div class="bg"></div>
 				<div class="vaseline ab">
 					<img src="images/vaseline_s.png" id="vs">
 					<img src="images/sl.png" id="sl">
@@ -101,6 +102,9 @@
 		 
 		<div class="starfield" id="starfield1">
 			<div id="stars1"></div>
+		</div>
+		<div class="starfield" id="starfield2">
+			<div id="stars2"></div>
 		</div>
 		<div class="cloud ab"></div>
 		<div class="cup ab"></div>
@@ -154,18 +158,23 @@
 				<div class="lx lx3"></div>
 				<div class="bs"></div>
 				<div class="logo"></div>
-				<div class="share"></div>
+				<div class="share">
+					<div class="sstar"></div>
+				</div>
 				<div class="wishtitle">
 					<img src="images/wishlogo.png" alt="">
 				</div>
 				<div class="form">
 					<p>恭喜你成功探索了Vaseline星球</p>
 					<p>许个愿吧~有机会获得神秘礼盒</p>
-					<div class="formitem">姓名：<input type="text"></div>
-					<div class="formitem">电话：<input type="tel"></div>
-					<div class="formitem txt"><span>愿望：</span><textarea></textarea></div>
+					<div class="formitem">姓名：<input type="text" id="form_name"></div>
+					<div class="formitem">电话：<input type="tel" id="form_tel"></div>
+					<div class="formitem txt"><span>愿望：</span><textarea id="form_wish"></textarea></div>
 				</div>
-				<p class="wishsucc">许愿成功了哦，<br>快把将星愿点亮，<br>将凡士林神秘礼盒带走吧！</p>
+				<p class="wishsucc">
+					<img src="images/share2.png" alt="">
+					还等什么？快将星愿点亮，<br>把凡士林神秘礼盒带走吧！
+				</p>
 				<div class="wishbtn"></div>
 			</div>
 			<!--wish / e-->
@@ -177,32 +186,25 @@
 		<audio src="media/music.mp3" preload="auto" loop></audio>
 	</div>
 	<div class="bling">
-		<audio src="media/music2.mp3" preload="auto"></audio>
+		<audio src="media/m1.mp3" preload="auto" id="m1"></audio>
+		<audio src="media/m2.mp3" preload="auto" id="m2"></audio>
+		<audio src="media/m3.mp3" preload="auto" id="m3"></audio>
+		<audio src="media/m4.mp3" preload="auto" id="m4"></audio>
 	</div>
-	<script type="text/javascript" src="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/js/jquery-2.1.1.min.js"></script>
-	<script src="js/preloader.min.js"></script>
-	<script src="http://lab.cubiq.org/iscroll5/build/iscroll.js"></script>
-	<script src="js/swiper.js"></script>
+	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/iscroll.js"></script>
+	<script type="text/javascript" src="js/swiper.js"></script>
 	<script type="text/javascript" src="js/app.js"></script>
 	<script>
-		function addUser(){
-			var url = "http://www.cosmopolitan.com.cn/files/eventapi.php?c=EventApiNew&a=AddEvent&indexsId=617";  
-
-			var data = { 
-				"data[2473]": "13031652989",//手机 
-				"data[2474]": "kevin2",//真实姓名 
-				"data[2475]": "test wish",//願望
-			};
-			$.ajax({
-				url:url,
-				data:data,
-				type:"GET",
-				success:function(reqData){
-					console.log(reqData)
-				}
-			});
-		}
-		//addUser();
+		//分享   title：标题   desc:描述   imgUrl:分享图片
+    var shareData = {
+    	imgUrl: IMG_PATH+'images/100.jpg',
+        title: '指向夜空中最亮的星，点亮属于你的星愿！',
+        desc: '做夜空中星星都会嫉妒的女人，凡士林护甲霜，开启你的美手修护之旅。',
+        link: window.location.href,
+        success:function(){}
+      };	
 	</script>
 </body>
 </html>

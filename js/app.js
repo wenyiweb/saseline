@@ -46,44 +46,12 @@ function coverFn(){
 	var count = 0;
 	$('.yun-content').on('touchmove',function(e){
 		e.preventDefault();
-		blingFn.init();
+		blingFn.m1play();
 		$('.yun-content .yun').addClass('on');
 		$('.yun-content .yun5').one('webkitTransitionEnd',function(){
 			$('.yun-content').hide();
 			brandsFn();
 		})
-		/*if(count == 0){
-			$('.yun-content .yun3').addClass('on');
-			$('.yun-content .yun3').one('webkitTransitionEnd',function(){
-				count = 1;
-			})
-		}
-		if(count == 1){
-			$('.yun-content .yun4').addClass('on');
-			$('.yun-content .yun4').one('webkitTransitionEnd',function(){
-				count = 2;
-			})
-		}
-		if(count == 2){
-			$('.yun-content .yun2,.yun-content .yun6').addClass('on');
-			$('.yun-content .yun2').one('webkitTransitionEnd',function(){
-				count = 3;
-			})
-		}
-		if(count == 3){
-			$('.yun-content .yun7').addClass('on');
-			$('.yun-content .yun7').one('webkitTransitionEnd',function(){
-				count = 4;
-			})
-		}
-		if(count == 4){
-			$('.yun-content .yun5,.yun-content .yun1').addClass('on');
-			$('.yun-content .yun5').one('webkitTransitionEnd',function(){
-				count =5;
-				$('.yun-content').hide();
-				brandsFn();
-			})
-		}*/
 	})
 }
 /**
@@ -123,29 +91,24 @@ function loaded () {
 			ignoreBoundaries: true,
 			speedRatioY: 0.4,
 			speedRatioX: 0.4
-		}/*, {
+		}, {
 			el: document.getElementById('starfield2'),
 			resize: false,
 			ignoreBoundaries: true,
-			speedRatioY: 0.2,
-			speedRatioX: 0.2
-		}*/]
+			speedRatioY: 1,
+			speedRatioX: 1
+		}]
 	});
 	$('.vaseline').on('tap',function(e){
 		e.preventDefault();
-		blingFn.init();
+		blingFn.m2play();
 		$(this).fadeOut();
 		$('.vaseline_tip').fadeOut();
 		$('.vaseline_logo').hide().css('opacity',1).fadeIn(function(){
 			myScroll.destroy();
-			//clearInterval(interval);
 			setTimeout(function(){
 				fade('.search-page','out');
 				fade('#swiper','in',scanFn)
-				/*$('.search-page').fadeOut('800');
-				$('#swiper').fadeIn('800',function(){
-					scanFn();
-				});*/
 			},2000);
 		});
 	});
@@ -171,6 +134,9 @@ function productFn(){
         mousewheelControl: true,
         keyboardControl: true,
         onSlideChangeEnd : function(){
+        	if(swiper.activeIndex == swiper.slides.length-1){
+        		$('.audio').hide();
+        	}
 	    }
 	});
 	$('.view').on('tap',function(){
@@ -182,28 +148,57 @@ function productFn(){
 		$('.reason').removeClass('on');
 	})
 	$('.wishbtn').on('click',function(){
+		blingFn.m4play();
+		addUser();
 		//$('#wish').addClass('animate');
-		wishFn();
+		//wishFn();
 	})
 }
 //报名
 function addUser(){
-	var url = "http://www.cosmopolitan.com.cn/files/eventapi.php?c=EventApiNew&a=AddEvent&indexsId=617";  
-
-	var data = { 
-		"data[2473]": "13031652389",//手机 
-		"data[2474]": "kevin",//真实姓名 
-		"data[2475]": "test wish",//願望
-	};
-	$.ajax({
-		url:url,
-		data:data,
-		type:"GET",
-		success:function(reqData){
-			console.log(reqData)
+		var url = "http://www.cosmopolitan.com.cn/files/eventapi.php?c=EventApiNew&a=AddEvent&indexsId=617&callbackfun=addUserCallback";  
+		var name = $('#form_name').val();
+		var phone = $('#form_tel').val();
+		var wish = $('#form_wish').val();
+		var phoneReg = /^13[0-9]{9}$|14[0-9]{9}$|15[0-9]{9}$|18[0-9]{9}$/;
+		if(name==''||name=='姓名'){
+			alert('万一中奖了，怎么称呼您？');
+			$('#form_name').focus();
+			return false;
 		}
-	});
-}
+		if(phone==''){
+			alert('万一中奖了，没电话怎么联系您啊');
+			$('#form_tel').focus();
+			return;
+		}else if(!phone.match(phoneReg)){
+			alert('请输入正确的手机号码');
+			$('#form_tel').focus();
+			return false;
+		}
+		if(wish==''){
+			alert('不输入愿望吗？');
+			$('#form_wish').focus();
+			return false;
+		}
+		var data = { 
+			"data[2473]": phone,//手机 
+			"data[2474]": name,//真实姓名 
+			"data[2475]": wish,//願望
+		};
+		$.ajax({
+			url:url,
+			data:data,
+			type:"GET",
+			dataType:'jsonp',
+		});
+	}
+	function addUserCallback(res){
+		if(res.status == 1){
+			wishFn();
+		}else{
+			alert(res.info);
+		}
+	}
 function wishFn(){
 	$('#wish').addClass('animate');
 	$('.wishtitle,.form').hide();
@@ -233,9 +228,11 @@ function wishFn(){
 	$('#wish .lx3').one('webkitTransitionEnd',function(){
 		$('#wish .lx3').css('-webkit-transform','translate3d(-540px,600px,0)');
 		$('#wish .lx3').one('webkitTransitionEnd',function(){
-			$('#wish .share').fadeIn(function(){
-				$('.wishsucc').addClass('on');
-			});
+			$('.wishsucc').addClass('on');
+			fade('#wish .share','in');
+			/*setTimeout(function(){
+				$('#wish .share').fadeIn();
+			},800)*/
 		})
 	});
 }	
@@ -334,9 +331,24 @@ var blingFn = {
 		this.ad.play();
 		//blingFn.eventInit();
 	},
+	m1play:function(){
+		document.querySelector('.bling #m1').play();
+	},
+	m2play:function(){
+		document.querySelector('.bling #m2').play();
+	},
+	m3play:function(){
+		document.querySelector('.bling #m3').play();
+	},
+	m4play:function(){
+		document.querySelector('.bling #m4').play();
+	},
 	testplay:function(){
-		this.ad.play();
-		this.ad.pause();
+		var _this = this;
+		for(var i=0;i<_this.ad.length;i++){
+			_this.ad[i].play();
+			_this.ad[i].pause();
+		}
 	},
 	eventInit: function(){
 		this.ad.addEventListener('ended', blingFn.endContr, false);
@@ -382,6 +394,7 @@ function  load(cb){
   }
 
   function hide(){
+  	$('.search-page').hide();
   	fade('.loading','out');
   	fade('.cover','in',function(){
   		cb&&cb();
@@ -397,12 +410,13 @@ $('body').css('height',wh);
 
 $('.loading').height(wh).css({'overflow':'hidden'});
 load(function(){
+	
 	coverFn();
 	blingFn.testplay();
 	audio = new Audio();
 	audio.init();
 	$('.explore').on('click',function(){
-		blingFn.init();
+		blingFn.m3play();
 		$(this).fadeOut();
 		$('.scan-box,#product,.main').addClass('on');
 		$('.kl').one('webkitAnimationEnd',function(){
@@ -412,4 +426,44 @@ load(function(){
 		});
 		
 	})
+});
+//share
+$(function(){
+	$.getJSON('http://m.cosmopolitan.com.cn/files/eventapi.php?c=Cosmom_Jssdk&type=json&url='+String(window.location.href),function(data){
+		wx.config({
+          debug: false,
+          appId: data.appId,
+          timestamp: data.timestamp,
+          nonceStr: data.nonceStr,
+          signature: data.signature,
+          jsApiList: [
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'previewImage'
+          ]
+      });
+	});
+});
+	
+wx.ready(function () {
+	wx.error(function(res){
+	    //console,log(res);
+	    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+
+	});
+
+	wx.checkJsApi({
+	    jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+	    success: function(res) {
+	        // 以键值对的形式返回，可用的api值true，不可用为false
+	        // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+	    }
+	});
+
+	wx.onMenuShareAppMessage(shareData);
+	wx.onMenuShareTimeline(shareData);
+	wx.onMenuShareQQ(shareData);
+	wx.onMenuShareWeibo(shareData);
 });

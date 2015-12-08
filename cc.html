@@ -21,88 +21,15 @@
 			e.preventDefault();
 		},false);
 	</script>
+	<link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="loaded()">
+<body>
 	<!--探索 / s-->
-	<div class="search-page ab">
-		<!-- <div class="cab"></div> -->
-		<!-- <canvas id="canvas"></canvas> -->
-		<style>
-		*{padding:0;margin:0;}
-		#wrapper {
-			position: absolute;
-			z-index: 1;
-			left: 0;
-			width: 100%;height:100%;
-			background: #ccc;
-			overflow: hidden;
-		}
-
-		#scroller {
-			position: absolute;
-			z-index: 1;
-			-webkit-tap-highlight-color: rgba(0,0,0,0);
-			width: 1920px;height:3408px;
-			-webkit-transform: translateZ(0);
-			-moz-transform: translateZ(0);
-			-ms-transform: translateZ(0);
-			-o-transform: translateZ(0);
-			transform: translateZ(0);
-			-webkit-touch-callout: none;
-			-webkit-user-select: none;
-			-moz-user-select: none;
-			-ms-user-select: none;
-			user-select: none;
-			-webkit-text-size-adjust: none;
-			-moz-text-size-adjust: none;
-			-ms-text-size-adjust: none;
-			-o-text-size-adjust: none;
-			text-size-adjust: none;
-			background: #fff;
-		}
-		.bg{width:1920px;height:3408px;background:url(images/bigbg.jpg) no-repeat center center;position:absolute;left:50%;top:50%;margin-left:-960px;margin-top:-1704px;}
-		.starfield {
-			position: absolute;
-			width: 100%;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			overflow: hidden;
-		}
-
-		.starfield div {
-			position: absolute;
-			
-			overflow: hidden;
-			-webkit-transform: translateZ(0);
-			-moz-transform: translateZ(0);
-			-ms-transform: translateZ(0);
-			-o-transform: translateZ(0);
-			transform: translateZ(0);
-		}
-		#starfield1 {
-			z-index: 2;
-		}
-
-		#stars1 {
-			z-index: 2;width:1920px;
-			height: 3408px;
-			background: url(images/us.png) repeat;
-		}
-
-		/* #starfield2 {
-			z-index: 1;
-		}
-		
-		#stars2 {
-			z-index: 1;
-			height: 2000px;
-		} */
-		</style>
+	<div class="search-page ab" style="display:block;">
 		<div id="wrapper">
 			<div id="scroller">
-				<div class="bg">				
-				<!-- <div class="vaseline ab">
+				<div class="bg"></div>
+				<div class="vaseline ab">
 					<img src="images/vaseline_s.png" id="vs">
 					<img src="images/sl.png" id="sl">
 					<img src="images/vaseline_s1.png" id="vs1">
@@ -112,46 +39,61 @@
 					<img src="images/hand.png" class="ab hand">
 				</div>
 				<div class="vaseline_logo ab"></div>
-				<div class="tip ab"></div> -->
-				
-			</div>
+				<div class="tip ab" style="opacity:1"></div>
 			</div>
 		</div>
+		 
 		<div class="starfield" id="starfield1">
 			<div id="stars1"></div>
 		</div>
-
-		<!-- <div class="starfield" id="starfield2">
+		<div class="starfield" id="starfield2">
 			<div id="stars2"></div>
+			
 		</div>
-		<div class="us"></div> -->
-		<!-- <div class="cloud ab"></div>
-		<div class="cup ab"></div> -->
+		<div class="cloud ab"></div>
+		<div class="cup ab"></div>
 	</div>
 	<!--探索 / e-->
-	<script type="text/javascript" src="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/js/jquery-2.1.1.min.js"></script>
-	<script src="http://lab.cubiq.org/iscroll5/build/iscroll.js"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script src="js/iscroll.js"></script>
 	<script>
-		var myScroll;
-
-		function loaded () {/*
-			myScroll = new IScroll('#wrapper', { scrollX: true, freeScroll: true });*/
-			myScroll = new IScroll('#wrapper', {
-				mouseWheel: true,
-				scrollX: true, freeScroll: true ,
-				indicators: [{
-					el: document.getElementById('starfield1'),
-					resize: false,
-					ignoreBoundaries: true,
-					speedRatioY: 0.4
-				}/*, {
-					el: document.getElementById('starfield2'),
-					resize: false,
-					ignoreBoundaries: true,
-					speedRatioY: 0.2
-				}*/]
-			});
-		}
+		var myScroll = new IScroll('#wrapper', {
+		mouseWheel: true,scrollX: true, freeScroll: true ,bounce:false,
+		indicators: [{
+			el: document.getElementById('starfield1'),
+			resize: false,
+			ignoreBoundaries: true,
+			speedRatioY:0.4,
+			speedRatioX: 0.4
+		}, {
+			el: document.getElementById('starfield2'),
+			resize: false,
+			ignoreBoundaries: true,
+			speedRatioY: 1,
+			speedRatioX: 1
+		}]
+	});
+	$('.vaseline').on('tap',function(e){
+		e.preventDefault();
+		blingFn.init();
+		$(this).fadeOut();
+		$('.vaseline_tip').fadeOut();
+		$('.vaseline_logo').hide().css('opacity',1).fadeIn(function(){
+			myScroll.destroy();
+			//clearInterval(interval);
+			setTimeout(function(){
+				fade('.search-page','out');
+				fade('#swiper','in',scanFn)
+				/*$('.search-page').fadeOut('800');
+				$('#swiper').fadeIn('800',function(){
+					scanFn();
+				});*/
+			},2000);
+		});
+	});
+	$('#wrapper').on('touchstart',function(){
+		$('.search-page .tip').hide();	
+	})
 	</script>
 </body>
 </html>

@@ -47,138 +47,66 @@ function loaded () {
 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
 
 </script>
-
-<style type="text/css">
-/* * {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-html {
-	-ms-touch-action: none;
-}
-
-body,ul,li {
-	padding: 0;
-	margin: 0;
-	border: 0;
-}
-
-body {
-	font-size: 12px;
-	font-family: ubuntu, helvetica, arial;
-	overflow: hidden; this is important to prevent the whole page to bounce
-	background: #000;height:1008px;
-}
-
-#wrapper {
-	position: absolute;
-	z-index: 3;
-	width: 100%;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	overflow: hidden;
-}
-
-#scroller {
-	position: absolute;
-	z-index: 3;
-	width: 3520px;
-	height: 6808px;
-	overflow: hidden;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-o-text-size-adjust: none;
-	text-size-adjust: none;
-	background: url(images/us.png) repeat;
-}
-
-.starfield {
-	position: absolute;
-	width: 100%;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	overflow: hidden;
-}
-
-.starfield div {
-	position: absolute;
-	width: 100%;
-	overflow: hidden;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-}
-
-#starfield1 {
-	z-index: 2;
-}
-
-#stars1 {
-	z-index: 1;width:1920px;
-	height: 3408px;
-	background: url(images/bigbg.jpg) no-repeat;
-} */
-
-/* #starfield2 {
-	z-index: 1;
-}
-
-#stars2 {
-	z-index: 1;
-	width:1000px;
-	height: 2000px;
-	background: url(images/us.png) repeat;
-} */
-
-</style>
 </head>
-<body onload="loaded()">
-
-<div class="search-page ab" style="display:block">
-	<div id="wrapper">
-		<div id="scroller">
-			<div class="vaseline ab">
-				<img src="images/vaseline_s.png" id="vs">
-				<img src="images/sl.png" id="sl">
-				<img src="images/vaseline_s1.png" id="vs1">
+<body style="background:none;">
+<!--wish / s-->
+			<div class="swiper-slide swiper-no-swiping" id="wish">
+				<p class="wishsucc">
+					<img src="images/share2.png" alt="">
+					还等什么？快将星愿点亮，<br>把凡士林神秘礼盒带走吧！
+				</p>
 			</div>
-			<div class="vaseline_tip ab">
-				<img src="images/star2.png" class="star2 ab">
-				<img src="images/hand.png" class="ab hand">
-			</div>
-			<div class="vaseline_logo ab"></div>
-			<div class="tip ab"></div>
-		</div>
-	</div>
+			<!--wish / e-->
+<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript" src="http://p5.yokacdn.com/pic/div/2015/topic/06/nzz/js/jquery-2.1.1.min.js"></script>
+<script>
+	//分享   title：标题   desc:描述   imgUrl:分享图片
+    var shareData = {
+    	imgUrl: 'http://p5.yokacdn.com/pic/div/2015/topic/11/punky/images/100.jpg',
+        title: '朋克之星免费机票大作战',
+        desc: '玩朋克之星小游戏 赢韩国双人自由行',
+        link: window.location.href,
+        success:function(){}
+      };
+	$(function(){
+		$.getJSON('http://m.cosmopolitan.com.cn/files/eventapi.php?c=Cosmom_Jssdk&type=json&url='+String(window.location.href),function(data){
+			wx.config({
+	          debug: false,
+	          appId: data.appId,
+	          timestamp: data.timestamp,
+	          nonceStr: data.nonceStr,
+	          signature: data.signature,
+	          jsApiList: [
+	            'onMenuShareTimeline',
+	            'onMenuShareAppMessage',
+	            'onMenuShareQQ',
+	            'onMenuShareWeibo',
+	            'previewImage'
+	          ]
+	      });
+		});
+	})
+	
+     wx.ready(function () {
+        wx.error(function(res){
+            //console,log(res);
+            // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
 
-	<div class="starfield" id="starfield1">
-		<div id="stars1"></div>
-	</div>
+        });
 
-	<div class="starfield" id="starfield2">
-		<div id="stars2"></div>
-	</div>
-	<div class="cloud ab"></div>
-	<div class="cup ab"></div>
-</div>
+        wx.checkJsApi({
+            jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareWeibo'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+            success: function(res) {
+                // 以键值对的形式返回，可用的api值true，不可用为false
+                // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+            }
+        });
 
+      wx.onMenuShareAppMessage(shareData);
+      wx.onMenuShareTimeline(shareData);
+      wx.onMenuShareQQ(shareData);
+      wx.onMenuShareWeibo(shareData);
+    });
+</script>
 </body>
 </html>
