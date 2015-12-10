@@ -46,12 +46,44 @@ function coverFn(){
 	var count = 0;
 	$('.yun-content').on('touchmove',function(e){
 		e.preventDefault();
-		blingFn.m1play();
+		blingFn.init();
 		$('.yun-content .yun').addClass('on');
 		$('.yun-content .yun5').one('webkitTransitionEnd',function(){
 			$('.yun-content').hide();
 			brandsFn();
 		})
+		/*if(count == 0){
+			$('.yun-content .yun3').addClass('on');
+			$('.yun-content .yun3').one('webkitTransitionEnd',function(){
+				count = 1;
+			})
+		}
+		if(count == 1){
+			$('.yun-content .yun4').addClass('on');
+			$('.yun-content .yun4').one('webkitTransitionEnd',function(){
+				count = 2;
+			})
+		}
+		if(count == 2){
+			$('.yun-content .yun2,.yun-content .yun6').addClass('on');
+			$('.yun-content .yun2').one('webkitTransitionEnd',function(){
+				count = 3;
+			})
+		}
+		if(count == 3){
+			$('.yun-content .yun7').addClass('on');
+			$('.yun-content .yun7').one('webkitTransitionEnd',function(){
+				count = 4;
+			})
+		}
+		if(count == 4){
+			$('.yun-content .yun5,.yun-content .yun1').addClass('on');
+			$('.yun-content .yun5').one('webkitTransitionEnd',function(){
+				count =5;
+				$('.yun-content').hide();
+				brandsFn();
+			})
+		}*/
 	})
 }
 /**
@@ -82,17 +114,23 @@ function brandsFn(){
 
 var myScroll;
 
-function loaded () {	
+function loaded () {
+	
 	$('.vaseline').on('tap',function(e){
 		e.preventDefault();
-		blingFn.m2play();
+		blingFn.init();
 		$(this).fadeOut();
 		$('.vaseline_tip').fadeOut();
 		$('.vaseline_logo').hide().css('opacity',1).fadeIn(function(){
 			myScroll.destroy();
+			//clearInterval(interval);
 			setTimeout(function(){
 				fade('.search-page','out');
 				fade('#swiper','in',scanFn)
+				/*$('.search-page').fadeOut('800');
+				$('#swiper').fadeIn('800',function(){
+					scanFn();
+				});*/
 			},2000);
 		});
 	});
@@ -132,7 +170,7 @@ function productFn(){
 		$('.reason').removeClass('on');
 	})
 	$('.wishbtn').on('click',function(){
-		blingFn.m4play();
+		blingFn.init();
 		addUser();
 		//$('#wish').addClass('animate');
 		//wishFn();
@@ -315,24 +353,9 @@ var blingFn = {
 		this.ad.play();
 		//blingFn.eventInit();
 	},
-	m1play:function(){
-		document.querySelector('.bling #m1').play();
-	},
-	m2play:function(){
-		document.querySelector('.bling #m2').play();
-	},
-	m3play:function(){
-		document.querySelector('.bling #m3').play();
-	},
-	m4play:function(){
-		document.querySelector('.bling #m4').play();
-	},
 	testplay:function(){
-		var _this = this;
-		for(var i=0;i<_this.ad.length;i++){
-			_this.ad[i].play();
-			_this.ad[i].pause();
-		}
+		this.ad.play();
+		this.ad.pause();
 	},
 	eventInit: function(){
 		this.ad.addEventListener('ended', blingFn.endContr, false);
@@ -417,7 +440,7 @@ load(function(){
 	});
 	$('.search-page').hide();
 	$('.explore').on('click',function(){
-		blingFn.m3play();
+		blingFn.init();
 		$(this).fadeOut();
 		$('.scan-box,#product,.main').addClass('on');
 		$('.kl').one('webkitAnimationEnd',function(){
