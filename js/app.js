@@ -378,7 +378,24 @@ function  load(cb){
   }
 
   function hide(){
-  	
+  	myScroll = new IScroll('#wrapper', {
+		mouseWheel: true,scrollX: true, freeScroll: true ,bounce:false,
+		indicators: [{
+			el: document.getElementById('starfield1'),
+			resize: false,
+			ignoreBoundaries: true,
+			speedRatioY: 0.4,
+			speedRatioX: 0.4
+		}, {
+			el: document.getElementById('starfield2'),
+			resize: false,
+			ignoreBoundaries: true,
+			speedRatioY: 1,
+			speedRatioX: 1
+		}]
+	});
+	$('.search-page').hide();
+	$('.loading').css('background','none');
   	fade('.loading','out');
   	fade('.cover','in',function(){
   		cb&&cb();
@@ -399,23 +416,7 @@ load(function(){
 	blingFn.testplay();
 	audio = new Audio();
 	audio.init();
-	myScroll = new IScroll('#wrapper', {
-		mouseWheel: true,scrollX: true, freeScroll: true ,bounce:false,
-		indicators: [{
-			el: document.getElementById('starfield1'),
-			resize: false,
-			ignoreBoundaries: true,
-			speedRatioY: 0.4,
-			speedRatioX: 0.4
-		}, {
-			el: document.getElementById('starfield2'),
-			resize: false,
-			ignoreBoundaries: true,
-			speedRatioY: 1,
-			speedRatioX: 1
-		}]
-	});
-	$('.search-page').hide();
+	
 	$('.explore').on('click',function(){
 		blingFn.m3play();
 		$(this).fadeOut();
